@@ -2,10 +2,8 @@ import re
 import numpy as np
 
 class GuardRecord:
-    def __init__(self, guard_number):
-        self.guard_number = guard_number
+    def __init__(self):
         self.sleep_record = np.zeros(60)
-        self.asleep = False
         self.fell_asleep_at = None
 
     def mins_asleep(self):
@@ -28,15 +26,13 @@ for obs in observations:
         #New Guard
         current_guard = get_guard.search(obs).group(1)
         if current_guard not in guards:
-            guards[current_guard] = GuardRecord(current_guard)
+            guards[current_guard] = GuardRecord()
 
     if "falls asleep" in obs:
-        guards[current_guard].asleep = True
         min = int(get_minute.search(obs).group(1))
         guards[current_guard].fell_asleep_at = min
 
     if "wakes up" in obs:
-        guards[current_guard].asleep = False
         min = int(get_minute.search(obs).group(1))
         for m in range(guards[current_guard].fell_asleep_at,min):
             guards[current_guard].sleep_record[m] += 1
@@ -54,7 +50,7 @@ g = int(guard_most_asleep)
 m = np.argmax(guards[guard_most_asleep].sleep_record)
 
 print("Guard Most Asleep: {}".format(g))
-print("Min Most Alseep At: {}".format(m))
+print("Min Most Asleep At: {}".format(m))
 print("Checksum: {}\n\n".format(g * m))
 
 print("Strategy 2:")

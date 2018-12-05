@@ -29,6 +29,8 @@ def improve_polymer(polymer):
 f = fullyReact(s)
 print ("Reacting base polymer returns a polymer of length {}\n\n".format(len(f)))
 
+# Optimize - can feed the output from 5-1 into 5-2, and eliminate repeated
+# cycles
 r,l = improve_polymer(f)
 
 print("Removing {} and fully reacting returns an optimized polymer of length {}".format(r,l))

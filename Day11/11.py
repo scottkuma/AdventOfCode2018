@@ -20,7 +20,32 @@ def getSquarePowerLevel(x,y,size,serial):
     return sum
 
 serial = 9221
+
+maxSqVal = -9999999
+maxSize = 0
+maxSqCoord = (-1,-1)
+
+
 # for part 1 of today's problem, set size = 3
+
+print("-"*20 + "PART 1" + "-"*20)
+
+size = 3
+s = size
+
+for x in xrange(299 - (s - 1)):
+    #print s,x
+    for y in xrange(299 - (s - 1)):
+        #print s,x,y
+        pl = getSquarePowerLevel(x+1,y+1,s,serial)
+        if pl > maxSqVal:
+            maxSqVal = pl
+            maxSize = s
+            maxSqCoord = (x+1, y+1)
+            print(maxSqCoord,maxSize,maxSqVal)
+
+print("\n\n\n" + "-"*20 + "PART 2" + "-"*20)
+
 size = 20
 
 maxSqVal = -9999999

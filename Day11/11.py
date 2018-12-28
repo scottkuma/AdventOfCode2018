@@ -46,7 +46,7 @@ for x in xrange(299 - (s - 1)):
 
 print("\n\n\n" + "-"*20 + "PART 2" + "-"*20)
 
-size = 20
+size = 20 # num of computations goes up GREATLY, so let's start low & see what happens
 
 maxSqVal = -9999999
 maxSize = 0

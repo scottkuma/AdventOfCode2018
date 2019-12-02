@@ -10,16 +10,12 @@ class Cart:
         self.facing = dirs[self.facing]
 
     def hit_intersection(self):
-        print(self)
         if self.last_turn == None or self.last_turn == "R":
-            print( "Last turn {}, turning left".format(self.last_turn))
             self.last_turn = "L"
             self.turn_left()
         elif self.last_turn == "L":
-            print( "Last turn {}, going straight".format(self.last_turn))
             self.last_turn = "S"
         elif self.last_turn == "S":
-            print( "Last turn {}, turning right".format(self.last_turn))
             self.last_turn = "R"
             self.turn_right()
         else:
@@ -29,20 +25,15 @@ class Cart:
         return self.track[self.posy][self.posx]
 
     def hit_curve(self,curve):
-        #print(self)
         if curve == "\\":
             if self.facing in "^v":
-                #print(" turning left.")
                 self.turn_left()
             elif self.facing in "<>":
-                #print(" turning right.")
                 self.turn_right()
         if curve == "/":
             if self.facing in "^v":
-                #print(" turning right.")
                 self.turn_right()
             elif self.facing in "<>":
-                #print(" turning left.")
                 self.turn_left()
 
     def step(self):
@@ -127,9 +118,6 @@ def is_crash(cars):
         else:
             positions.append((c.posx, c.posy))
 
-    #if crashPos is None:
-    #    print("All safe!")
-
     return crashPos
 
 
@@ -139,20 +127,14 @@ track = [l.strip('\n') for l in track] #remove trailing linefeeds
 cars = get_cars(track)
 track = get_clean_track(track)
 
-#drawboard(track, cars)
-#print("\n\n")
 crash = False
 num_steps = 0
 while not crash:
     num_steps += 1
     print("Step #{}".format(num_steps))
-    #if num_steps == 18:
-        #drawboard(track,cars)
     for c in cars:
         c.step()
-    #drawboard(track,cars)
     crash = is_crash(cars)
     if crash:
         print("CRASH @ ({}, {})!!!!!!!!!!!!!!!!!".format(crash[0], crash[1]))
-    #print("\n\n")
 print ("Steps = {}".format(num_steps))

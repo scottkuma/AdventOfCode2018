@@ -135,6 +135,6 @@ while not crash:
     for c in cars:
         c.step()
     crash = is_crash(cars)
-    if crash:
-        print("CRASH @ ({}, {})!!!!!!!!!!!!!!!!!".format(crash[0], crash[1]))
+
+print("CRASH @ ({}, {})!!!!!!!!!!!!!!!!!".format(crash[0], crash[1]))
 print ("Steps = {}".format(num_steps))

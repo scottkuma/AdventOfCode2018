@@ -15,24 +15,20 @@ class Elf:
 
     def move(self,num,recipes):
         l = len(recipes)
-        #print("Recipes Length: {}".format(l))
         if self.location + num >= l:
             self.location = (self.location + num) - l
             while self.location >= l:
                 self.location -= l
         else:
             self.location = self.location + num
-        #print("New Location: {}".format(self.location))
-        #print("Value: {}".format(recipes[self.location]))
 
-def add_recipes(elf1, elf2, recipes):
+def add_to_recipes(elf1, elf2, recipes):
     e1val = recipes[elf1.location]
     e2val = recipes[elf2.location]
 
-    return recipes + str(int(e1val) + int(e2val))
+    return str(int(e1val) + int(e2val))
 
 def print_recipes(recipes,elf1,elf2):
-
     outstr = ""
     rating = ""
     for a in range(len(recipes)):
@@ -46,30 +42,36 @@ def print_recipes(recipes,elf1,elf2):
             outstr += " " + rating + " "
         else:
             outstr += rating
-
     return(outstr)
 
 recipes = "37"
 
-num_recipes_to_check = 10
-initial_length = len(recipes)
-check_after = 580741
-
-target_start = check_after
+target_string = "580741"
+target_string_len = len(target_string)
+compare_string = "37"
 
 e1 = Elf(0)
 e2 = Elf(1)
 
+num = 0
 while True:
+    num += 1
+    if num % 100000 == 0:
+        print("Searched thru {}".format(num))
+        #sys.exit()
+    suff = add_to_recipes(e1,e2,recipes)
+    suff_len = len(suff)
+    recipes = recipes + suff
+    compare_string = compare_string + suff
 
-#    print(print_recipes(recipes,e1,e2))
+    #print(target_string + " : " + compare_string)
 
-    recipes = add_recipes(e1,e2,recipes)
+    if target_string in compare_string:
+        print "found @ {}".format(recipes.find(target_string))
+        break
+
+    if len(compare_string) > target_string_len:
+        compare_string = compare_string[-1 * target_string_len:]
+
     e1.move(int(recipes[e1.get_loc()]) + 1, recipes)
     e2.move(int(recipes[e2.get_loc()]) + 1, recipes)
-
-    if len(recipes) > target_start + num_recipes_to_check:
-        #print(recipes)
-        print(recipes[target_start:target_start + num_recipes_to_check])
-        print("Done")
-        sys.exit()
